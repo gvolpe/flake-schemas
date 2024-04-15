@@ -230,6 +230,19 @@
           output);
       };
 
+      homeManagerModulesSchema = {
+        version = 1;
+        doc = ''
+          The `homeManagerModules` flake output defines [Home Manager configurations](https://github.com/nix-community/home-manager).
+        '';
+        inventory = output: self.lib.mkChildren (builtins.mapAttrs
+          (moduleName: module:
+            {
+              what = "Home Manager module";
+            })
+          output);
+      };
+
       homeConfigurationsSchema = {
         version = 1;
         doc = ''
@@ -303,6 +316,7 @@
       schemas.nixosConfigurations = nixosConfigurationsSchema;
       schemas.nixosModules = nixosModulesSchema;
       schemas.homeConfigurations = homeConfigurationsSchema;
+      schemas.homeManagerModules = homeManagerModulesSchema;
       schemas.darwinConfigurations = darwinConfigurationsSchema;
     };
 }
